@@ -26,30 +26,36 @@ const App = () => {
 }
 
 const Header = (props) => {
-    return (
-        <>
-        <h1>{props.course}</h1>
-        </>
-    )
+  return (
+    <>
+      <h1>{props.course}</h1>
+    </>
+  )
 }
 
 const Content = (props) => {
-    
-    const parts = props.content.map((content) =>
+  const parts = props.content.map((content) =>
     <p>{content.part}</p>
   );
-    return (
-        <>
-        <p>{parts}</p>
-        </>
-    );
+
+  return (
+    <>
+      <p>{parts}</p>
+    </>
+  );
 }
 
 const Total = (props) => {
-    return (
-        <>
-        <p>{props.content[0].exercises + props.content[1].exercises + props.content[2].exercises}</p>
-        </>  
+  let total = 0;
+  
+  props.content.forEach(content => {
+    total += content.exercises;
+  });
+
+  return (
+    <>
+      <p>{total}</p>
+    </>  
     )  
 }
 
