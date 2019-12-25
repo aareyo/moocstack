@@ -10,7 +10,7 @@ const Button = (props) => {
 const Statistics = (props) => {
 
   let sum = props.good + props.neutral + props.bad
-  let average = isNaN(props.good - props.bad / (sum)) ? 0 : props.good - props.bad / (sum)
+  let average = isNaN((props.good - props.bad) / (sum)) ? 0 : (props.good - props.bad) / (sum)
   let positive = isNaN(props.good / (sum) * 100) ? 0 + ' %' : (props.good / (sum) * 100) + ' %'
 
   if (sum === 0) {
