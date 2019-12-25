@@ -7,16 +7,18 @@ const Button = (props) => {
   )
 }
 
-const Statistics = ({good, neutral, bad, text}) => {
-  let sum = good + neutral + bad
-  let average = good - bad / (good + neutral + bad)
-  let positive = good / (neutral + bad + good) * 100
+const Statistics = (props) => {
+
+
+  let sum = props.good + props.neutral + props.bad
+  let average = isNaN(props.good - props.bad / (sum)) ? 0 : props.good - props.bad / (sum)
+  let positive = isNaN(props.good / (sum) * 100) ? 0 : props.good / (sum) * 100
 
   return (
     <>
     <p>Sum {sum}</p>
     <p>Average {average}</p>
-    <p>positive {positive}</p>
+    <p>Positive {positive} %</p>
     </>
   )
 }
@@ -28,9 +30,6 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
-  const feedback = [good, neutral, bad]
-console.log(feedback)
-
   return (
     <div>
       <h1>give feedback</h1>
@@ -41,7 +40,7 @@ console.log(feedback)
       <p>good {good}</p>
       <p>neutral {neutral}</p>
       <p>bad {bad}</p>
-      <Statistics feedback={feedback} />
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   )
 }
