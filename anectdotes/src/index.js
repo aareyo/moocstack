@@ -19,7 +19,7 @@ const MostPoints = ({points, anecdotes}) => {
   return (
     <>
       <h1>Anecdote with most votes</h1>
-      <p>{anecdotes[mostPoints]}</p>
+      <p>{anecdotes[mostPoints]} has {points[mostPoints]} votes</p>
     </>
   )
 }
@@ -29,6 +29,7 @@ const Random = (selected, anecdotes) => {
   while (random === selected) {
     random = Math.floor(Math.random() * anecdotes.length)
   }
+
   return random
 }
 
@@ -36,7 +37,7 @@ const App = (props) => {
   const [selected, setSelected] = useState(0)
   const [points, setPoints] = useState(new Array(anecdotes.length).fill(0))
 
-  let random = Random(selected, anecdotes)
+  const random = Random(selected, anecdotes)
 
   const vote = () => {
     const copy = [...points]
