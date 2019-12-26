@@ -15,7 +15,6 @@ const Header = ({course}) => {
   }
   
   const Content = ({course}) => {
-
     const rows = () => course.parts.map(part =>
         <Part 
           key={part.id}
@@ -31,7 +30,6 @@ const Header = ({course}) => {
   }
   
   const Total = ({course}) => {
-
     const total = 
     course.parts.map(part => part.exercises).reduce((accumulator, curval) => accumulator + curval)
   
