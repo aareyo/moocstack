@@ -18,8 +18,19 @@ const App = () => {
       name: newPerson,
     }
 
-    setPersons(persons.concat(personObject))
-    setNewPerson('')
+    const alreadyOnList = persons.filter(person => person.name === personObject.name)
+
+    if (alreadyOnList.length > 0) {
+      alert(
+        `${personObject.name} is already added to phonebook`
+      )
+      setNewPerson('')
+    } else {
+      setPersons(persons.concat(personObject))
+      setNewPerson('')
+    }
+
+    
   }
 
   const rows = () => persons.map(person =>
