@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Person from './components/Person'
+import Person from './Persons'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -55,12 +55,11 @@ const filterPersonNameChange = (event) => {
   }
 
   const rows = () => {
-
     const filteredPersons = persons.filter(person => person.name.toUpperCase().includes(newFilter.toUpperCase()))
 
     return (
       filteredPersons.map(person =>
-        <Person
+        <Persons
           key={person.name}
           person={person}
         />
