@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Persons from "./Persons";
 import Filter from "./Filter";
 import PersonForm from "./PersonForm";
@@ -37,12 +36,18 @@ const App = () => {
     });
   };
 
-  const handleDeletePerson = (id) => {
-    personService.remove(id)
-    setPersons(persons.filter(person => person.id !== id))
+  const handleDeletePerson = (person) => {
+    let id = person.id;
+    const confirm = window.confirm(`Delete ${person.name}`)
+    if(confirm) {
+      console.log('lala ')
+      personService.remove(id)
+      setPersons(persons.filter(person => person.id !== id))
+    }
+
   }
 
-  const addPerson = event => {
+  const addPerson = (event) => {
     event.preventDefault();
     const personObject = {
       name: newPerson.name,
@@ -54,7 +59,15 @@ const App = () => {
     );
 
     if (alreadyOnList.length > 0) {
-      alert(`${personObject.name} is already added to phonebook`);
+      const confirm = window.confirm(`${newPerson.name} is already added to phonebook, replace the old number with a new one?`)
+      
+      if(confirm) {
+        personService.update(alreadyOnList[0].id, newPerson)
+        .then(returnedPerson => {
+          setPersons(persons.map(person => person.id === alreadyOnList[0].id ? returnedPerson : person))
+      })
+    }
+      
     } else {
       personService.create(personObject).then(returnedPerson => {
         setPersons(persons.concat(returnedPerson));
