@@ -3,32 +3,12 @@
     {
       "name": "Ada Lovelace",
       "number": "39-44-5323523",
-      "id": 2
+      "id": 1
     },
     {
       "name": "Dan Abramov",
       "number": "12-43-234345",
-      "id": 3
-    },
-    {
-      "name": "kala",
-      "number": "6941",
-      "id": 5
-    },
-    {
-      "name": "jaan",
-      "number": "898989",
-      "id": 6
-    },
-    {
-      "name": "dsadadsa",
-      "number": "sdaadsads",
-      "id": 7
-    },
-    {
-      "name": "hiiri",
-      "number": "771714",
-      "id": 8
+      "id": 2
     }
   ]
 }
