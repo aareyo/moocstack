@@ -1,28 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Persons from "./Persons";
 import Filter from "./Filter";
 import PersonForm from "./PersonForm";
+import personService from "../services/personService";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
-      })
-  }, [])
-
   const [newPerson, setNewPerson] = useState({
     name: null,
     phone: null
   });
-
   const [newFilter, setNewFilter] = useState("");
 
-  const filterPersonNameChange = (event) => {
+  useEffect(() => {
+    personService.getAll().then(returnedPerson => {
+      setPersons(returnedPerson)
+    })
+  }, []);
+
+  const filterPersonNameChange = event => {
     setNewFilter(event.target.value);
   };
 
@@ -40,7 +37,12 @@ const App = () => {
     });
   };
 
-  const addPerson = (event) => {
+  const handleDeletePerson = (id) => {
+    personService.remove(id)
+    setPersons(persons.filter(person => person.id !== id))
+  }
+
+  const addPerson = event => {
     event.preventDefault();
     const personObject = {
       name: newPerson.name,
@@ -53,18 +55,21 @@ const App = () => {
 
     if (alreadyOnList.length > 0) {
       alert(`${personObject.name} is already added to phonebook`);
-      setNewPerson("");
     } else {
-      setPersons(persons.concat(personObject));
-      setNewPerson("");
+      personService.create(personObject).then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson));
+      });
     }
+    setNewPerson("");
   };
-
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <Filter value={newFilter} filterPersonNameChange={filterPersonNameChange} />
+      <Filter
+        value={newFilter}
+        filterPersonNameChange={filterPersonNameChange}
+      />
       <br></br>
       <h1>add new</h1>
       <PersonForm
@@ -73,7 +78,7 @@ const App = () => {
         handlePersonNumberChange={handlePersonNumberChange}
       />
       <h2>Numbers</h2>
-      <Persons persons={persons} newFilter={newFilter} />
+      <Persons persons={persons} newFilter={newFilter} handleDeletePerson={handleDeletePerson} />
     </div>
   );
 };
