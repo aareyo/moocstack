@@ -53,6 +53,25 @@ app.get('/api/persons/:id', (request, response) => {
   response.json(person)
 })
 
+app.delete('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id)
+  persons = persons.filter(p => p.id !== id)
+
+  response.status(204).end()
+})
+
+app.post('/api/persons', (request, response) => {
+  // This is bad practice of creating id's, but for tasks sake...
+  const randomId = Math.floor(Math.random() * Math.floor(5000000));
+  
+  const person = request.body
+  person.id = randomId
+
+  persons = persons.concat(person)
+
+  response.json(person)
+})
+
 const port = 3001
 app.listen(port)
 console.log(`Server running on port ${port}`)
